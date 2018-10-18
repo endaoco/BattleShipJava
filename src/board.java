@@ -9,7 +9,7 @@ public class board {
 		
 		char letters = 'A';
 		char numbers = '1';
-				
+		board[0][0] = ' ';		
 		for(int i =1; i<10; i++) {
 			board[i][0] = letters++;
 			board[0][i] = numbers++;
@@ -54,5 +54,13 @@ public class board {
 				row--;
 			}
 		}
-	}	
+	}
+	
+	public boolean checkSpace(int col, int row) {
+		if(board[col][row] == '~') {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }

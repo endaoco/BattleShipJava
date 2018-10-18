@@ -8,12 +8,28 @@ public class Main {
 		Player player1 = new Player("Enda");		
 		board player1Board = new board();
 	
+		//int col =2, row=2;
+		//System.out.print(player1Board.checkSpace(col, row));
+		
 		ship ship5 = new ship(5);
+		ship ship4 = new ship(4);
+		ship ship3 = new ship(3);
+		ship ship2 = new ship(2);
+		ship ship1 = new ship(1);
 
 		//String placemnet = placement.validPlacement();
 		player1Board.placeShip(validPlacement(ship5, player1Board, player1), ship5.shipLength);
-		//player1Board.changeBoard(player1.makeMove(), '<');
 		player1Board.printBoard();
+		player1Board.placeShip(validPlacement(ship4, player1Board, player1), ship4.shipLength);
+		player1Board.printBoard();
+		player1Board.placeShip(validPlacement(ship3, player1Board, player1), ship3.shipLength);
+		player1Board.printBoard();
+		player1Board.placeShip(validPlacement(ship2, player1Board, player1), ship2.shipLength);
+		player1Board.printBoard();
+		player1Board.placeShip(validPlacement(ship1, player1Board, player1), ship1.shipLength);
+		player1Board.printBoard();
+		//player1Board.changeBoard(player1.makeMove(), '<');
+		
 		
 		//Place ships
 		
@@ -21,6 +37,8 @@ public class Main {
 				
 	}
 	
+	//Asks for the orientation adn validates that input, it also asks for placement of the ship
+	//and then check given the orientation if it fits
 	public static String validPlacement(ship currentShip, board playerBoard, Player thePlayer) {
 		
 		Scanner scan = new Scanner(System.in);
@@ -55,14 +73,47 @@ public class Main {
 			} else if (!isHorizontal && ((placeShip % 10) - currentShip.shipLength) >= 0) {
 				invalidPlacement = false;
 			} else {
-				System.out.println("The ship doesn't fit try again somewhere else, make move: ");
+				System.out.println("Oops make sure to place the ship on the board, try again: ");
 				placeShip = thePlayer.makeMove();
 			}
 		}
 		
-		System.out.print("placeShip:" + placeShip + "\n");
+		invalidPlacement = true;
+		boolean checkRow = true;
+		while(invalidPlacement) {
+			 {
+				int column = placeShip / 10;
+				int row = placeShip % 10;
+				boolean spaceFilled =false;
+				
+				if(isHorizontal){
+					for(int i=0; i<currentShip.shipLength; i++) {
+						if(playerBoard.checkSpace(row, column)) {
+							spaceFilled = true;
+						}
+						column++;
+					}
+				} else if(!isHorizontal) {
+					for(int i=0; i<currentShip.shipLength; i++) {
+						if(playerBoard.checkSpace(row, column)) {
+							spaceFilled = true;
+						}
+						row--;
+					}
+				}
+				
+				if(spaceFilled) {
+					System.out.println("Looks like theres a ship in the way, try again: ");
+					placeShip = thePlayer.makeMove();
+				}
+				else {
+					invalidPlacement = false;
+				}	 
+			}
+		}
+		
 		String moveOrientation = Integer.toString(placeShip);
-		System.out.print("move orientation:" + moveOrientation + "\n");
+
 		if( orientation.charAt(0) == 'h') {
 
 			moveOrientation += 'h';
@@ -71,52 +122,6 @@ public class Main {
 		}
 
 		return moveOrientation;
-	}
-	
-	/*public static void placeShips(ship currentShip, board playerBoard) {
-		
-		boolean isVertical=false, correctInput=true;
-		int row, column;
-		
-		String input;
-		Scanner scan = new Scanner(System.in);
-		
-		
-		
-		while(correctInput) {
-			
-			System.out.printf("You are placing a battleship of length %d %n "
-					+ "Would you like to place it horizontally or verticaly? (h for horizontal or v for verticaly):", currentShip.shipLength);
-			input = scan.nextLine();
-			
-			char charInput = input.charAt(0);
-			
-			if(charInput == 'v') {
-				isVertical = true;
-				correctInput = false;
-			}
-			else if (charInput == 'h'){
-				isVertical = false;
-				correctInput = false;
-			}
-			else {
-				System.out.println("Incorrect input");
-			}
-		}
-		
-		System.out.print("Now place your ship! Enter a number from 1-9");
-		column = scan.nextInt();
-		System.out.print("Enter a letter from A-I");
-		char rowChar = scan.next().charAt(0);
-		rowChar = Character.toLowerCase(rowChar);
-		row = rowChar - 'b';
-		
-		if(isVertical && row > 6 ) {
-			for(int i=currentShip.shipLength; i>1; i--) {
-				playerBoard.board[column][i] = '^';
-			}
-		}
-	}*/
-	
-	
+	}	
 }
+
