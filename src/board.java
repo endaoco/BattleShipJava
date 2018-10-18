@@ -19,7 +19,9 @@ public class board {
 		}
 	}
 	
-	public static void printBoard() {
+	//Prints the current board
+	public void printBoard() {
+		System.out.println("");
 		for(int i=0; i<10; i++) {
 			for(int j=0; j<10; j++) {
 				System.out.printf(" %c ", board[i][j]);
@@ -27,5 +29,30 @@ public class board {
 			System.out.print("\n");
 		}
 	}
+	//Method to change a given index on the board
+	public void changeBoard(String move, char symbol) {
+		int column = move.charAt(0) - '0';	
+		int row = move.charAt(1) - 'a' + 1;
+
+		board[column][row] = symbol;
+	}
 	
+	//changes the board to represent the ships
+	public void placeShip(String move, int shipLength) {
+		System.out.print("move: " +move);
+		int column = move.charAt(0) - '0' ;
+		int row = move.charAt(1) - '0';
+
+		if(move.charAt(2) == 'h') {
+			for(int i=0; i<shipLength; i++) {
+				board[row][column] = '>';
+				column++;
+			}
+		} else {
+			for(int i=0; i<shipLength; i++) {
+				board[row][column] = '^';
+				row--;
+			}
+		}
+	}	
 }

@@ -8,11 +8,4 @@ public class ship {
 		shipLength = mshipLength;
 		hits = mshipLength;
 	}
-	
-	public static void placeShip(board playerBoard){
-		for(int i=6; i>1; i--) {
-			playerBoard.board[3][i] = '^';
-		}
-	}
-	
 }

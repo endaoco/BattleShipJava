@@ -4,22 +4,73 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
+		
+		Player player1 = new Player("Enda");		
 		board player1Board = new board();
 	
+		ship ship5 = new ship(5);
+
+		//String placemnet = placement.validPlacement();
+		player1Board.placeShip(validPlacement(ship5, player1Board, player1), ship5.shipLength);
+		//player1Board.changeBoard(player1.makeMove(), '<');
 		player1Board.printBoard();
 		
 		//Place ships
-		ship ship5 = new ship(5);
-		/*ship ship4 = new ship(4);
-		ship ship3_1 = new ship(3);
-		ship ship3_2 = new ship(3);
-		ship ship2 = new ship(2);*/
-		
-		ship5.placeShip(player1Board);
-		player1Board.printBoard();
 		
 		
+				
+	}
+	
+	public static String validPlacement(ship currentShip, board playerBoard, Player thePlayer) {
 		
+		Scanner scan = new Scanner(System.in);
+		String orientation;
+		boolean incorrectInput = true;
+		boolean isHorizontal = false;
+		boolean invalidPlacement = true;
+		
+		System.out.printf("Where would you like to place your battleship of length %d? \n", currentShip.shipLength);
+		int placeShip = thePlayer.makeMove();
+		
+		System.out.print("Do you want to place your ship vertically(v) or horizontally(h):");
+		orientation = scan.nextLine();
+		
+		while(incorrectInput) {
+			if((orientation.charAt(0) != 'v' && orientation.charAt(0) != 'h') || orientation.length() > 1) {
+				System.out.println("Incorrect input please enter either v for vertical or h for horizontal:");
+				orientation = scan.nextLine();
+	
+			} else {
+				incorrectInput = false;
+			}
+		}
+		
+		if( orientation.charAt(0) == 'h') {
+			isHorizontal = true;
+		} 
+		
+		while(invalidPlacement) {
+			if(isHorizontal && ((placeShip / 10) + currentShip.shipLength) <= 10) {
+				invalidPlacement = false;		
+			} else if (!isHorizontal && ((placeShip % 10) - currentShip.shipLength) >= 0) {
+				invalidPlacement = false;
+			} else {
+				System.out.println("The ship doesn't fit try again somewhere else, make move: ");
+				placeShip = thePlayer.makeMove();
+			}
+		}
+		
+		System.out.print("placeShip:" + placeShip + "\n");
+		String moveOrientation = Integer.toString(placeShip);
+		System.out.print("move orientation:" + moveOrientation + "\n");
+		if( orientation.charAt(0) == 'h') {
+
+			moveOrientation += 'h';
+		} else {
+			moveOrientation += 'v';
+		}
+
+		return moveOrientation;
 	}
 	
 	/*public static void placeShips(ship currentShip, board playerBoard) {
