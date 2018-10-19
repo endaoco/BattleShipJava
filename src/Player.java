@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Player {
 	
-	private String name;
+	public String name;
 	Scanner scan = new Scanner(System.in);
 
 	public Player(String mName) {
@@ -19,8 +19,12 @@ public class Player {
 		
 			System.out.print("Enter column number followed by row (in the form 2b):");
 			move = scan.nextLine();
-			while(incorrectInput) {			
-				if(move.charAt(0) < '0' || move.charAt(0) > '9' || move.charAt(1) < 'a'  || move.charAt(1) > 'i' ) {
+			while(incorrectInput) {	
+				if(move.length() != 2) {
+					System.out.print("Incorrect input, please enter a number from 1-9 follwed by a lowercase letter from a-i \nPlease enter new move:");
+					move = scan.nextLine();
+				}
+				if(move.charAt(0) < '0' || move.charAt(0) > '9' || move.charAt(1) < 'a'  || move.charAt(1) > 'i') {
 					System.out.print("Incorrect input, please enter a number from 1-9 follwed by a lowercase letter from a-i \nPlease enter new move:");
 					move = scan.nextLine();
 				}else {

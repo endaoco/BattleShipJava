@@ -1,11 +1,11 @@
 
 public class board {
 	
-	public static char[][] board = new char[10][10];
+	private char[][] board = new char[10][10];
 	
 	public board(){
 		
-		//Board Intialisation 
+		//board Intialisation 
 		
 		char letters = 'A';
 		char numbers = '1';
@@ -30,11 +30,11 @@ public class board {
 		}
 	}
 	//Method to change a given index on the board
-	public void changeBoard(String move, char symbol) {
-		int column = move.charAt(0) - '0';	
-		int row = move.charAt(1) - 'a' + 1;
+	public void changeBoard(int move, char symbol) {
+		int column = move / 10;	
+		int row = move % 10;
 
-		board[column][row] = symbol;
+		board[row][column] = symbol;
 	}
 	
 	//changes the board to represent the ships
@@ -57,10 +57,22 @@ public class board {
 	}
 	
 	public boolean checkSpace(int col, int row) {
-		if(board[col][row] == '~') {
+		if(board[row][col] == '~') {
 			return false;
 		} else {
 			return true;
+		}
+	}
+	
+	public boolean checkForShip(int move) {
+		int col;
+		int row;
+		col = move / 10;
+		row = move % 10;
+		if(board[row][col] == '>' || board[row][col] == '^' ) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 }
