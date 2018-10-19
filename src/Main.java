@@ -62,7 +62,7 @@ public class Main {
 					}
 					
 					if(player1Hits == 15) {
-						System.out.printf("Congradulations %s! You won!", player1.name);
+						System.out.printf("congratulations %s! You won!", player1.name);
 						hit = false;
 						gameLoop = false;
 						player1Win = true;
@@ -91,7 +91,7 @@ public class Main {
 						}
 							
 						if(player2Hits == 15) {
-							System.out.printf("Congradulations %s! You won!", player2.name);
+							System.out.printf("congratulations %s! You won!", player2.name);
 							hit = false;
 							gameLoop = false;
 						}
@@ -126,7 +126,9 @@ public class Main {
 		orientation = scan.nextLine();
 		
 		while(incorrectInput) {
+			
 			if((orientation.charAt(0) != 'v' && orientation.charAt(0) != 'h') || orientation.length() > 1) {
+				orientation = "";
 				System.out.println("Incorrect input please enter either v for vertical or h for horizontal:");
 				orientation = scan.nextLine();
 	
